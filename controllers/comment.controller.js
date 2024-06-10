@@ -1,23 +1,67 @@
-
+import Comment from "../models/comment.model.js";
 
 
 
 export const createComments = async (req, res, next) => {
-  res.status(201).json({ message: 'Comment created' });
+  try {
+    const { content } = req.body;
+
+    if ( !content) {
+      return res.status(400).json("please fill content field");
+    }
+
+    const newComment = await Comment.create({
+      content,
+    });
+
+    if (!newComment) {
+      return res.status(400)("Comment couldn't be created.");
+    }
+
+    res.status(201).json(newComment);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 };
 
 export const retreiveComments = async (req, res, next) => {
-  res.status(201).json({ message: 'Comments retrieved' });
+  try {
+    const comments = await Comment.findAll();
+
+    res.status(200).json(comments);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 };
 
 export const retreiveComment = async (req, res, next) => {
-  res.status(201).json({ message: 'Comment retrieved' });
+  try {
+    const { id } = req.params;
+
+    const comment = await Comment.findByPk(id);
+
+    if (!comment) {
+      return res.status(404).json("Comment not found.");
+    }
+
+    res.status(200).json(comment);
+  } catch (error) {
+    res.status(500).json(error);
+  }
 };
 
 export const updateComments = async (req, res, next) => {
-  res.status(201).json({ message: 'Comment updated' });
+  try {
+    
+  } catch (error) {
+    res.status(500).json(error);
+  }
 };
 
 export const deleteComments = async (req, res, next) => {
-  res.status(201).json({ message: 'Comment deleted' });
+  try {
+    
+  } catch (error) {
+    res.status(500).json(error);
+  }
 };
