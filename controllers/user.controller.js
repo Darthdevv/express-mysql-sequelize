@@ -50,13 +50,13 @@ try {
     const user = await User.findOne({ email: newEmail });
 
     if (!user) {
-      return res.status(400).json("User not found");
+      return res.status(404).json("User not found");
     }
 
     const comparePasswords = bcrypt.compare(password, user.password);
 
     if (!comparePasswords) {
-      return res.status(400).json("Invalid c");
+      return res.status(401).json("Invalid passwword.");
     }
 
     const { id, username } = user;
