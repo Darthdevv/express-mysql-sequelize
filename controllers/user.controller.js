@@ -7,11 +7,11 @@ export const registerUser = async (req, res, next) => {
 }
 
 
-export const loginUser = async (req, res, next) => { 
-
+export const loginUser = async (req, res, next) => {
+  res.status(200).json({ message: "User logged in successfully" });
 };
 
 
 export const logoutUser = async (req, res, next) => {
-
+  res.status(200).json({ message: "User logged out successfully" });
 };

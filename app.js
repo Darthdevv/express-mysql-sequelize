@@ -4,6 +4,8 @@ import User from './models/user.model.js';
 import Post from './models/post.model.js';
 import Comment from './models/comment.model.js';
 import userRoutes from './routes/user.routes.js';
+import postRoutes from './routes/post.routes.js';
+import commentRoutes from './routes/comment.routes.js';
 
 const app = express();
 
@@ -15,6 +17,8 @@ Post
 Comment
 
 app.use('/api/users', userRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes);
 
 const port = 8000;
 app.listen(port, () => {
