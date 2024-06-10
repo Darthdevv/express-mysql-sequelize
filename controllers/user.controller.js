@@ -2,7 +2,8 @@
 
 
 export const registerUser = async (req, res, next) => {
-
+  const { username, email, password } = req.body;
+  res.status(201).json({ message: 'User registered' });
 }
 
 
