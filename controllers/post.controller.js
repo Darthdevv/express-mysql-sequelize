@@ -70,7 +70,7 @@ export const updatePosts = async (req, res, next) => {
       return res.status(400).json("failed to update the post.");
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       message: 'Post updated successfully.',
       updatedPost
     });
@@ -81,7 +81,20 @@ export const updatePosts = async (req, res, next) => {
 
 export const deletePosts = async (req, res, next) => {
   try {
-    
+    const { id } = req.params;
+
+    const deletedPost = await Post.destroy({
+      where: { id }
+    })
+
+    if (!deletedPost) {
+      return res.status(400).json("failed to delete the post.");
+    }
+
+    res.status(204).json({
+      message: "Post deleted successfully.",
+      deletedPost,
+    });
   } catch (error) {
     res.status(500).json(error);
   }

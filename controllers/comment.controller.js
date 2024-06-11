@@ -69,7 +69,7 @@ export const updateComments = async (req, res, next) => {
       return res.status(400).json("failed to update the comment.");
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       message: "Comment updated successfully.",
       updatedComment,
     });
@@ -80,7 +80,20 @@ export const updateComments = async (req, res, next) => {
 
 export const deleteComments = async (req, res, next) => {
   try {
-    
+    const { id } = req.params;
+
+    const deletedComment = await Comment.destroy({
+      where: { id },
+    });
+
+    if (!deletedComment) {
+      return res.status(400).json("failed to delete the comment.");
+    }
+
+    res.status(204).json({
+      message: "Comment deleted successfully.",
+      deletedComment,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
