@@ -52,7 +52,28 @@ export const retreivePost = async (req, res, next) => {
 
 export const updatePosts = async (req, res, next) => {
   try {
-    
+    const { title, content } = req.body;
+
+    const { id } = req.params;
+
+    const updatedPost = await Post.update(
+      {
+        title,
+        content
+      },
+      {
+        where: { id },
+      }
+    )
+
+    if (!updatedPost[0]) {
+      return res.status(400).json("failed to update the post.");
+    }
+
+    return res.status(200).json({
+      message: 'Post updated successfully.',
+      updatedPost
+    });
   } catch (error) {
     res.status(500).json(error);
   }

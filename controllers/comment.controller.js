@@ -52,7 +52,27 @@ export const retreiveComment = async (req, res, next) => {
 
 export const updateComments = async (req, res, next) => {
   try {
-    
+    const { content } = req.body;
+
+    const { id } = req.params;
+
+    const updatedComment = await Comment.update(
+      {
+        content
+      },
+      {
+        where: { id },
+      }
+    );
+
+    if (!updatedComment[0]) {
+      return res.status(400).json("failed to update the comment.");
+    }
+
+    return res.status(200).json({
+      message: "Comment updated successfully.",
+      updatedComment,
+    });
   } catch (error) {
     res.status(500).json(error);
   }
